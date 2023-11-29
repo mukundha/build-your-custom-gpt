@@ -45,11 +45,16 @@ chainlit run app.py
 
 UI - chainlit
 
-![image](images/login.png)
-![image](images/upload.png)
-![image](images/fileprocess.png)
-![image](images/processdone.png)
-![image](images/qa.png)
+<img src="images/login.png" width="300px">
+
+<img src="images/upload.png" width="300px">
+
+<img src="images/fileprocess.png" width="300px">
+
+<img src="images/processdone.png" width="300px">
+
+<img src="images/qa.png" width="300px">
+
 
 #### Google Login
 App is protected with Google Login, after Login `username` returned by Google is used as key to manage user session and data.
@@ -78,7 +83,8 @@ vstore = AstraDB(
 vstore.add_documents(docs)
 ```
 That's it! 
-![documents](images/documents.png)
+
+<img src="images/documents.png">
 
 #### Chat with your Data
 
