@@ -57,8 +57,8 @@ UI - chainlit
 <img src="images/processdone.png" width="300px">
 
 <img src="images/qa.png" width="300px">
-
 </p>
+
 #### Google Login
 App is protected with Google Login, after Login `username` returned by Google is used as key to manage user session and data.
 
@@ -105,3 +105,4 @@ chain = ConversationalRetrievalChain.from_llm(
         return_source_documents=True,
     )
 ```
+
