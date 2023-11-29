@@ -38,6 +38,8 @@ CHAINLIT_AUTH_SECRET=1234567890
 Run
 
 ```
+pip install -r requirements.txt
+
 chainlit run app.py
 ```
 
