@@ -17,7 +17,7 @@ Let developers (businesses) create their own "Build your own custom GPT" solutio
 . 
 Solution is Similar to both of the above, but
 - you can run a similar service for your users
-- demonstrates how you can build such a solution using Astra DB and Langchain (which also means, you have optionality to choose any LLM - for eg, Palm2 or Claude or llama etc..)
+- demonstrates how you can build such a solution using Astra DB and Langchain (which also means, you have optionality to choose any LLM - for eg, GPT-4 or Claude 2 (via AWS Bedrock) or Gemini-pro (using GCP Vertex) llama (coming soon!) etc..)
 
 ### Get started
 
@@ -33,9 +33,33 @@ ASTRA_DB_APPLICATION_TOKEN=xxx
 OAUTH_GOOGLE_CLIENT_ID=xxx
 OAUTH_GOOGLE_CLIENT_SECRET=xxx
 CHAINLIT_AUTH_SECRET=1234567890
+
+AWS_CREDENTIALS_PROFILE=<aws credentials profile name>
+
+
+LLM_PROVIDER= ## Bedrock (for Claudev2) or OpenAI (for GPT-4) or Vertex (for GeminiPro)
 ```
 
-Run
+Notes on LLM Choice:
+
+OpenAI:
+- Uses GPT-4 (maybe will make this configurable in future)
+- Set `LLM_PROVIDER=OpenAI`
+- variable `OPENAI_API_KEY` is sufficient, you can ignore `AWS_CREDENTIALS_PROFILE`
+
+Bedrock:
+- Uses claude-v2 (maybe will make this configurable in future)
+- Set `LLM_PROVIDER=Bedrock`
+- variable `AWS_CREDENTIALS_PROFILE` is required, 
+- `OPENAI_API_KEY` is required too (used for embeddings, will add optionality in future)
+
+
+Vertex:
+- Uses Gemini-pro (maybe will make this configurable in future)
+- Set `LLM_PROVIDER=Vertex`
+- Run `gcloud auth application-default login` to setup credentials if running locally
+- `OPENAI_API_KEY` is required too (used for embeddings, will add optionality in future)
+- env variable `AWS_CREDENTIALS_PROFILE` is not required, 
 
 ```
 pip install -r requirements.txt
@@ -96,7 +120,7 @@ Note: Metadata filtering is used to search only in the documents this user has u
 
 ```
 chain = ConversationalRetrievalChain.from_llm(
-        ChatOpenAI(model_name="gpt-4-1106-preview", temperature=0, streaming=True),
+        llm,
         chain_type="stuff",        
         retriever=vstore.as_retriever(
             search_kwargs=

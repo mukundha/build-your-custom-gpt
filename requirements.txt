@@ -1,3 +1,5 @@
 astrapy
 langchain
 chainlit
+google-cloud-aiplatform
+boto3
