@@ -25,7 +25,7 @@ Solution is Similar to both of the above, but
 - [Recommended] [Enable Preview](https://www.datastax.com/blog/astra-db-serverless-vector-new-experience) for Vector and JSON native experience
 - [Refer Google Signin guide](https://developers.google.com/identity/sign-in/web/sign-in#create_authorization_credentials) for Google OAuth credentials, this is used for login to the app.
 
-Required environment variables
+#### Required environment variables
 ```
 OPENAI_API_KEY=xx
 ASTRA_DB_API_ENDPOINT=xxx
@@ -40,27 +40,37 @@ AWS_CREDENTIALS_PROFILE=<aws credentials profile name>
 LLM_PROVIDER= ## Bedrock (for Claudev2) or OpenAI (for GPT-4) or Vertex (for GeminiPro)
 ```
 
-Notes on LLM Choice:
+#### Notes on LLM Choice:
 
-OpenAI:
+##### OpenAI:
 - Uses GPT-4 (maybe will make this configurable in future)
 - Set `LLM_PROVIDER=OpenAI`
 - variable `OPENAI_API_KEY` is sufficient, you can ignore `AWS_CREDENTIALS_PROFILE`
 
-Bedrock:
+##### Bedrock:
 - Uses claude-v2 (maybe will make this configurable in future)
 - Set `LLM_PROVIDER=Bedrock`
 - variable `AWS_CREDENTIALS_PROFILE` is required, 
 - `OPENAI_API_KEY` is required too (used for embeddings, will add optionality in future)
 
 
-Vertex:
+##### Vertex:
 - Uses Gemini-pro (maybe will make this configurable in future)
 - Set `LLM_PROVIDER=Vertex`
 - Run `gcloud auth application-default login` to setup credentials if running locally
 - `OPENAI_API_KEY` is required too (used for embeddings, will add optionality in future)
 - env variable `AWS_CREDENTIALS_PROFILE` is not required, 
 
+#### Tracing 
+To enable tracing with Langsmith, add the following environment variables
+
+```
+LANGCHAIN_TRACING_V2=true
+LANGCHAIN_ENDPOINT=https://api.smith.langchain.com
+LANGCHAIN_API_KEY=xxx
+LANGCHAIN_PROJECT=xxx
+```
+#### Run
 ```
 pip install -r requirements.txt
 
