@@ -1,5 +1,5 @@
 astrapy
-langchain
+ragstack-ai
 chainlit
 google-cloud-aiplatform
 boto3
