@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Dict, Optional
 from langchain.chains import ConversationalRetrievalChain
 from langchain.chat_models import ChatOpenAI
 from langchain.docstore.document import Document
@@ -9,20 +9,27 @@ from langchain.llms import Bedrock
 from langchain.llms import VertexAI
 
 import os 
-
+print('starting app')
 llm_provider = os.environ.get("LLM_PROVIDER")
+print(llm_provider)
 
 @cl.oauth_callback
 def oauth_callback(
-    default_app_user: cl.AppUser,
-) -> Optional[cl.AppUser]:  
-    return default_app_user
+  provider_id: str,
+  token: str,
+  raw_user_data: Dict[str, str],
+  default_user: cl.AppUser,
+) -> Optional[cl.AppUser]:
+  return default_user
 
 @cl.on_chat_start
 async def on_chat_start():
+    print('started')
     app_user = cl.user_session.get("user")
-    await cl.Message(f"Hello {app_user.username}").send()    
-    user = get_files_for_user(app_user)    
+    print(app_user)
+    username =app_user.username
+    await cl.Message(f"Hello {username}").send()    
+    user = get_files_for_user(username)
     if user:
         await cl.Message(f"Here are your files: {user['files']}. How can i help?").send() 
     else: 
@@ -59,7 +66,7 @@ async def on_chat_start():
         chain_type="stuff",        
         retriever=vstore.as_retriever(
             search_kwargs=
-                {"filter": {"username": f"{app_user.username}"},"k": 5}),
+                {"filter": {"username": f"{username}"},"k": 5}),
         memory=memory,
         return_source_documents=True,
     )
